@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movie website</title>
+</head>
+<body>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+<header>
+    <a href="#" class="logo">
+        <i class="bi bi-film"></i> MOVIES
+    </a>
+    <div ><i class="bi bi-list" ></i></div>
+    <ul class="navbar">
+       <li> <a href="#home" class="home-active">Home</a></li>
+       <li> <a href="#movies">Movies</a></li>
+       <li> <a href="#coming">Coming</a></li>
+       <li>
+        <nav>
+        <input type="text" id="searchInput" placeholder="Search" >
+        
+        
+        <button onclick="searchMovies()">Search</button>
+        <button onclick="showWatchlist()">Show Watchlist</button> 
+        </nav>
+    </li>
+    </ul>
+    <a href="#" class="btn"> LOG OUT</a>
+
+    
+</header> 
+
+
+
+<section class="home swiper" id="home">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide container">
+            <img src="img/home1.jpg" alt="">
+            <div class="home-text">
+                <span> Marvel Universe</span>
+                <h1>Venom:Let there <br> Be Carange</h1>
+                <a href="#" class="btn">Add To Watchlist</a>
+                <a href="#" class="play">
+                    <i class="bi bi-play-fill"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="swiper-slide container">
+            <img src="img/home2.jpg" alt="">
+            <div class="home-text">
+                <span> Marvel Universe</span>
+                <h1>Avengers <br> infinity war</h1>
+                <a href="#" class="btn">Add To Watchlist</a>
+                <a href="#" class="play">
+                    <i class="bi bi-play-fill"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="swiper-slide container">
+            <img src="img/home3.jpg" alt="">
+            <div class="home-text">
+                <span> Marvel Universe</span>
+                <h1>Spider Man  <br> Far From Home</h1>
+                <a href="#" class="btn">Add To Watchlist</a>
+                <a href="#" class="play">
+                    <i class="bi bi-play-fill"></i>
+                </a>
+            </div>
+        </div>
+        
+      </div>
+      
+      <div class="swiper-pagination"></div>
+
+</section>
+
+<section class="movies" id="movies">
+    <h2 class="heading"> Opening This Week</h2>
+    <div class="movie-container">
+        <div class="box">
+            <div class="box-img">
+        <img src="img/m1.jpg">
+    </div>
+    <h3>Venom</h3>
+    <span> 120min | Action</span>
+    </div>
+
+    <div class="box">
+        <div class="box-img">
+    <img src="img/m2.jpg">
+</div>
+<h3>Dunkirk</h3>
+<span> 120min | Adventure</span>
+</div>
+
+<div class="box">
+    <div class="box-img">
+<img src="img/m3.jpg">
+</div>
+<h3>Batman vs Superman</h3>
+<span> 120min | thriller</span>
+</div>
+
+
+<div class="box">
+    <div class="box-img">
+<img src="img/m4.jpg">
+</div>
+<h3>John WICK chapter 2</h3>
+<span> 120min | Adventure</span>
+</div>
+
+<div class="box">
+    <div class="box-img">
+<img src="img/m5.jpg" class="poster">
+    </div>
+<h3>Aquaman</h3>
+<span> 120min | Action</span>
+</div>
+
+<div class="box">
+    <div class="box-img">
+<img src="img/m6.jpg">
+</div>
+<h3>Black Panther</h3>
+<span> 120min | Thriller</span>
+</div>
+
+<div class="box">
+    <div class="box-img">
+<img src="img/m7.jpg">
+</div>
+<h3>Thor</h3>
+<span> 120min | Adventure</span>
+</div>
+
+<div class="box">
+    <div class="box-img">
+<img src="img/m8.jpg">
+</div>
+<h3>BumbleBee</h3>
+<span> 120min | Thriller</span>
+</div>
+
+<div class="box">
+    <div class="box-img">
+<img src="img/m9.jpg">
+</div>
+<h3>Mortal Engines</h3>
+<span> 120min | Action</span>
+</div>
+
+
+<div class="box">
+    <div class="box-img">
+<img src="img/m10.jpg">
+</div>
+<h3>Underworld Blood Wars</h3>
+<span> 120min | Action</span>
+</div>
+
+    </div>
+    <aside id="watchlist" >
+        <h2>My Watchlist</h2>
+        <div id="watchlist-movies"></div> <!-- Container for watchlist movies -->
+    </aside>
+    
+</section>
+
+ 
+
+    
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".home ", {
+      spaceBetween: 30,
+      centeredSlides: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+     
+    });
+  </script>
+  <script>
+    const apiKey = 'c7a77339'; 
+    function createMovieCard(movie) {
+        const section = document.getElementById('movies');
+
+        const movieCard = document.createElement('div');
+        movieCard.classList.add('movie-card');
+
+        const title = document.createElement('h2');
+        title.textContent = movie.Title;
+
+        const rating = document.createElement('p');
+        rating.textContent = `Rating: ${movie.imdbRating}/10`;
+
+        const description = document.createElement('p');
+        description.textContent = movie.Plot;
+
+        const addToWatchlistBtn = document.createElement('button');
+   addToWatchlistBtn.className += "watch";
+        addToWatchlistBtn.textContent = 'Add to watchlist';
+
+        
+
+        movieCard.appendChild(title);
+        movieCard.appendChild(rating);
+        movieCard.appendChild(description);
+        movieCard.appendChild(addToWatchlistBtn);
+        
+
+        section.appendChild(movieCard);
+    }
+
+    async function searchMovies() {
+        const searchInput = document.getElementById('searchInput').value;
+        const response = await fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${searchInput}`);
+        const data = await response.json();
+
+        const moviesSection = document.getElementById('movies');
+        moviesSection.innerHTML = ''; 
+
+        if (data.Search) {
+            data.Search.forEach(async movie => {
+                const movieResponse = await fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${movie.imdbID}`);
+                const movieData = await movieResponse.json();
+                createMovieCard(movieData);
+            });
+        }
+    }
+
+    async function loadInitialMovies() {
+        const response = await fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=trending movies`); 
+        const data = await response.json();
+
+        if (data.Search) {
+            data.Search.forEach(async movie => {
+                const movieResponse = await fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${movie.imdbID}`);
+                const movieData = await movieResponse.json();
+                createMovieCard(movieData);
+            });
+        }
+    }
+    function addToWatchlist(movie) {
+            let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+            watchlist.push(movie);
+            localStorage.setItem('watchlist', JSON.stringify(watchlist));
+        }
+
+        function showWatchlist() {
+            const watchlistSection = document.getElementById('watchlist');
+            const watchlistMoviesContainer = document.getElementById('watchlist-movies');
+
+            watchlistSection.style.display = 'block'; // Show the watchlist section
+
+            let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+
+            if (watchlist.length === 0) {
+                watchlistMoviesContainer.innerHTML = '<p>No movies added to watchlist yet.</p>';
+            } else {
+                watchlistMoviesContainer.innerHTML = ''; // Clear previous watchlist content
+
+                // Display movies in the watchlist
+                watchlist.forEach(movie => {
+                    const movieCard = document.createElement('div');
+                    movieCard.classList.add('movie-card');
+
+                    const title = document.createElement('h2');
+                    title.textContent = movie.Title;
+
+                    const rating = document.createElement('p');
+                    rating.textContent = `Rating: ${movie.imdbRating}/10`;
+
+                    const description = document.createElement('p');
+                    description.textContent = movie.Plot;
+
+                    movieCard.appendChild(title);
+                    movieCard.appendChild(rating);
+                    movieCard.appendChild(description);
+
+                    watchlistMoviesContainer.appendChild(movieCard);
+                });
+            }
+        }
+
+        window.onload = function () {
+            loadInitialMovies();
+        };
+   
+   
+        window.onload = loadInitialMovies;
+
+    
+</script>
+    
+  
+  
+
+</body>
+</html>

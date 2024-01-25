@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+
+<style>
+    body{
+    margin:0;
+    overflow:hidden;
+    font-family: Arial, Helvetica, sans-serif;
+        
+    }
+body .img{
+    width:190%;
+    height:100%;
+
+}
+
+    
+
+    .an-btn{height: 400px;
+        width:1000px;
+    background-color: rgb(130, 128, 136);
+border-radius: 20px;
+border-style: groove;
+text-align: center;
+ 
+}
+.item1{height:400px;
+width:300px;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+border: 2px solid white;
+border-radius: 40px;
+margin-left: 30px;
+margin-top: 15px; 
+text-align: center;
+background-color:transparent;
+
+}
+.text-field{
+    padding: 10px 30px;
+    margin:20px 0;
+    border: 2px solid white;
+    border-radius: 10px;
+    font-size: 12pt;
+    background-color: transparent;
+
+}
+.btn-style{
+    padding: 10px 30px;
+    border: 1px solid white;
+    background-color: green;
+    color: rgb(150, 193, 164);
+    border-radius: 10px;
+    
+    
+}
+.btn-style:hover{
+    background-color: rgb(72, 144, 128);
+    color: rgb(88, 219, 76);
+    border-radius: 20px;
+}
+.an-btn{
+    margin-top:10px;
+    border:0;
+    background-color: none;
+    color: white;
+    font-size: 14pt;
+
+}
+#register-div{
+    display:none;
+}
+#result-box{
+    position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size: 14pt;
+color:#fff;
+
+}
+h2{
+    color: aliceblue;
+}
+</style>
+
+</head>
+<body  class="img"  background="img/1.webp"> 
+    
+
+    <div class="item1" id="login-div"> 
+        <h2>LOGIN</h2>
+        <input type="email" id="login-email" class="text-field" name="login-email" placeholder="email" required/>
+        <input type="password" id="login-password" class="text-field" name="login-password" placeholder="password" required/>
+        <button id="login-btn" class="btn-style">login</button><br>
+        <button id="reg-btn" class="an.btn">don't have an account? REGISTER</button><br>
+
+    </div>
+    <div class="item1" id="register-div"> 
+        <h2>register</h2>
+        <input type="email" id="register-email" class="text-field" name="register" placeholder="email"required/><br>
+        <input type="password" id="register-password" class="text-field" name="login-password" placeholder="password"required/><br>
+        <button id="register-btn" class="btn-style" > Register</button><br>
+        <button id="log-btn" class="an-style" > have an account? LOGIN</button><br>
+
+        
+    </div>
+    <div id="result-box">
+        <h3 id="result"></h3><br>
+        
+         
+    </div>
+    
+    <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword ,createUserWithEmailAndPassword, signOut  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        
+      
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyCOcF0AsaLdO4V9b3ieT_FLR3rMtJSQ01I",
+          authDomain: "newp-c9947.firebaseapp.com",
+          projectId: "newp-c9947",
+          storageBucket: "newp-c9947.appspot.com",
+          messagingSenderId: "169897028540",
+          appId: "1:169897028540:web:dd10294aa0b4b82f15d9b9"
+        };
+      
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+      
+    document.getElementById('reg-btn').addEventListener('click',function(){
+        document.getElementById('register-div').style.display="inline";
+        document.getElementById("login-div").style.display="none";
+    });
+    document.getElementById('log-btn').addEventListener('click',function(){
+        document.getElementById('register-div').style.display="none";
+        document.getElementById("login-div").style.display="inline";
+    });
+
+    document.getElementById('login-btn').addEventListener('click',function(){
+        const loginemail= document. getElementById("login-email").value
+        const loginpassword= document. getElementById("login-password").value
+    
+
+        signInWithEmailAndPassword(auth, loginemail, loginpassword)
+  .then((userCredential) => {
+    
+    const user = userCredential.user;
+    
+    document.getElementById("result-box").style.display="inline";
+    document.getElementById("login-div").style.display="none";
+    document.getElementById("result").innerHTML= window.location.href = "http://127.0.0.1:5500/code.html";
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    document.getElementById("result-box").style.display="inline";
+    document.getElementById("login-div").style.display="none";
+    document.getElementById("result").innerHTML=" sorry! <br>" + errormessage; 
+  });
+    });
+  document.getElementById('register-btn').addEventListener('click',function(){
+        const registeremail= document. getElementById("register-email").value
+        const registerpassword= document. getElementById("register-password").value
+
+        createUserWithEmailAndPassword(auth, registeremail,registerpassword)
+  .then((userCredential) => {
+    
+    const user = userCredential.user;
+    document.getElementById("result-box").style.display="inline";
+    document.getElementById("register-div").style.display="none";
+    document.getElementById("result").innerHTML= window.location.href = "http://127.0.0.1:5500/movie%20website.html";
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+
+    const errorMessage = error.message;
+    document.getElementById("result-box").style.display="inline";
+    document.getElementById("register-div").style.display="none";
+    document.getElementById("result").innerHTML=" sorry! <br>" + errormessage; 
+  });
+  
+
+    });
+
+    document.getElementById('log-out-btn').addEventListener('click',function(){
+        signOut(auth).then(() => {
+  
+  document.getElementById("result-box").style.display="none";
+    document.getElementById("login-div").style.display="inline";
+        })
+.catch((error) => {
+  
+  document.getElementById("result").innerHTML=" sorry! <br>" + errormessage; 
+});
+
+    });
+    
+   
+
+</script>
+   
+    
+</body>
+</html>
